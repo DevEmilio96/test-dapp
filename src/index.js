@@ -78,13 +78,11 @@ async function getBalance() {
   return balance;
 }
 
-web3.eth.getBalance("0x0E7f711C75a24A0492b9d8D366eA4Ec833A570ca").then(result => (
-  web3VersionDiv.innerHTML = "WBNB: " + web3.utils.fromWei(result, 'ether')
-));
+/* moneta custom solo emilio
 getBalance().then(function (balance) {
   //balance = parseFloat(balance) / 10;
   testBalance.innerHTML = "TTK: " + parseFloat(web3.utils.fromWei(balance, 'ether'))
-});
+});*/
 web3VersionDiv.innerHTML = '';
 console.log("balance" + getBalance());
 
@@ -1022,6 +1020,10 @@ const initialize = async () => {
   function handleNewAccounts(newAccounts) {
     accounts = newAccounts;
     accountsDiv.innerHTML = accounts;
+    console.log(accounts);
+    web3.eth.getBalance(accounts[0]).then(result => (
+      web3VersionDiv.innerHTML = "WBNB: " + web3.utils.fromWei(result, 'ether')
+    ));
     if (isMetaMaskConnected()) {
       initializeAccountButtons();
     }
