@@ -9,26 +9,88 @@ import {
 } from 'eth-sig-util';
 import { ethers } from 'ethers';
 import { toChecksumAddress } from 'ethereumjs-util';
+import { web3Eth } from 'web3-eth';
+import { web3Emilio } from 'web3-eth';
 import {
   hstBytecode,
   hstAbi,
   piggybankBytecode,
   piggybankAbi,
 } from './constants.json';
+/* EMILIO ------------------------------------*/
+const Web3 = require('web3');
+//var web3 = new Web3(web3Eth.givenProvider || "ws://localhost:8545");
+//var web3 = new Web3(Web3.givenProvider || 'ws://some.local-or-remote.node:8545');
+//testnet
+const web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545');
+//mainnet
+//const web3 = new Web3('https://bsc-dataseed.binance.org/');
 
+//const account = web3.eth.accounts.privateKeyToAccount("0x0E7f711C75a24A0492b9d8D366eA4Ec833A570ca");
+/* EMILIO ------------------------------------*/
 let ethersProvider;
 let hstFactory;
 let piggybankFactory;
 
 const currentUrl = new URL(window.location.href);
 const forwarderOrigin =
-  currentUrl.hostname === 'localhost' ? 'http://localhost:9010' : undefined;
+  currentUrl.hostname === 'localhost' ? 'http://localhost:8545' : undefined;
+  /* ricorda di mettere 9011 */
 
 const { isMetaMaskInstalled } = MetaMaskOnboarding;
 
 // Dapp Status Section
 const networkDiv = document.getElementById('network');
 const chainIdDiv = document.getElementById('chainId');
+const web3VersionDiv = document.getElementById('web3Version');
+const testBalance = document.getElementById('testBalance');
+web3.eth.defaultAccount = '0x0E7f711C75a24A0492b9d8D366eA4Ec833A570ca';
+/*web3.eth.defaultChain = 'goerli';
+web3.eth.defaultHardfork = 'istanbul';
+web3.eth.defaultBlock = 231;*/
+// compiled solidity source code using https://remix.ethereum.org
+var code = "603d80600c6000396000f3007c01000000000000000000000000000000000000000000000000000000006000350463c6888fa18114602d57005b6007600435028060005260206000f3";
+//var balance =web3.eth.getBalance("0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c").then(console.log);
+/* 0x998dA8aBB100270d2B68C789679841f562ac880e creato tramite test*/
+// The minimum ABI to get ERC20 Token balance
+var minABI = [
+  // balanceOf
+  {
+    "constant":true,
+    "inputs":[{"name":"_owner","type":"address"}],
+    "name":"balanceOf",
+    "outputs":[{"name":"balance","type":"uint256"}],
+    "type":"function"
+  },
+  // decimals
+  {
+    "constant":true,
+    "inputs":[],
+    "name":"decimals",
+    "outputs":[{"name":"","type":"uint8"}],
+    "type":"function"
+  }
+];
+var contract = new web3.eth.Contract(minABI,"0x7b74738d84a6e5373410b34ef8656ae8cc1b5a37");
+
+async function getBalance() {
+  var balance = await contract.methods.balanceOf("0x0E7f711C75a24A0492b9d8D366eA4Ec833A570ca").call();
+  return balance;
+}
+
+web3.eth.getBalance("0x0E7f711C75a24A0492b9d8D366eA4Ec833A570ca").then(result => (
+  web3VersionDiv.innerHTML = "WBNB: " + web3.utils.fromWei(result, 'ether')
+));
+getBalance().then(function (balance) {
+  //balance = parseFloat(balance) / 10;
+  testBalance.innerHTML = "TTK: " + parseFloat(web3.utils.fromWei(balance, 'ether'))
+});
+web3VersionDiv.innerHTML = '';
+console.log("balance" + getBalance());
+
+/*var BNBbalance = web3.eth.getBalance("0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c");
+console.log("BNB BALANCE: " + BNBbalance);*/
+
 const accountsDiv = document.getElementById('accounts');
 
 // Basic Actions Section
@@ -238,11 +300,16 @@ const initialize = async () => {
       method: 'wallet_addEthereumChain',
       params: [
         {
-          chainId: '0x64',
-          rpcUrls: ['https://dai.poa.network'],
-          chainName: 'xDAI Chain',
-          nativeCurrency: { name: 'xDAI', decimals: 18, symbol: 'xDAI' },
-          blockExplorerUrls: ['https://blockscout.com/poa/xdai'],
+         /* chainId: '97',
+          rpcUrls: ['https://data-seed-prebsc-1-s1.binance.org:8545/'],
+          chainName: 'Binance Smart Chain',
+          nativeCurrency: { name: 'Wrapped BNB', decimals: 18, symbol: 'WBNB' },
+          blockExplorerUrls: ['https://testnet.bscscan.com'],*/
+          chainId: '56',
+          rpcUrls: ['https://bsc-dataseed.binance.org/'],
+          chainName: 'Binance Smart Chain',
+          nativeCurrency: { name: 'Wrapped BNB', decimals: 18, symbol: 'WBNB' },
+          blockExplorerUrls: ['https://bscscan.com'],
         },
       ],
     });
