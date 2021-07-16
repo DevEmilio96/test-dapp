@@ -7,7 +7,10 @@ const DIST = path.resolve(__dirname, 'dist');
 module.exports = {
   devtool: 'eval-source-map',
   mode: 'development',
-  entry: './src/index.js',
+  entry: [
+    './src/index.js',
+    './src/app.js'
+],
   output: {
     filename: 'bundle.js',
     path: DIST,

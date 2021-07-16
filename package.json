@@ -35,7 +35,11 @@
   "homepage": "https://metamask.github.io/test-dapp",
   "dependencies": {
     "@binance-chain/bsc-connector": "^1.0.0",
-    "web3": "^1.4.0"
+    "@web3-react/core": "^6.1.9",
+    "fontsource-red-hat-display": "^4.0.0",
+    "react": "^17.0.2",
+    "web3": "^1.4.0",
+    "web3-react": "^5.0.5"
   },
   "devDependencies": {
     "@lavamoat/allow-scripts": "^1.0.6",
@@ -69,7 +73,11 @@
       "web3-bzz": false,
       "bufferutil": false,
       "utf-8-validate": false,
-      "web3-shh": false
+      "web3-shh": false,
+      "node-hid": false,
+      "usb": false,
+      "core-js-pure": false,
+      "core-js": false
     }
   }
 }
