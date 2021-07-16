@@ -1,9 +1,53 @@
+/* lcd font*/
+body{
+  width: 100% !important;
+  background-image: url(sfondoUgames.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+@font-face {
+  font-family: font-lcd;
+  src: url(digital-7.ttf);
+
+}
+#mm-logo {
+  width: 20% ;
+}
+
+@media only screen and (max-width: 600px) {
+  #mm-logo {
+    width: 100% !important;
+  }
+}
 section {
   margin: 20px 0 20px 0;
 }
-
+p{
+  font-family: font-lcd;
+font-weight: bold;
+color: white !important;
+}
+.card-title{
+  color: white;
+  font-family: font-lcd;
+  font-size: 3em;
+  text-align: center;
+  font-weight: bolder;
+}
+.card-body{
+  background: #008080;
+}
+.btn-primary{
+  font-size: 1.5em !important;
+  font-family: font-lcd;
+  background: #800080 !important;
+}
 .info-text {
-  font-size: 1.1em;
+  background: #008080;
+  font-size: 2em;
+  letter-spacing: 0.5px;
 }
 
 .full-width {
@@ -28,16 +72,80 @@ header {
 }
 
 #logo-text {
+  font-weight: bold;
+  color: white;
+  font-family: font-lcd;
+  font-size: 3em;
   padding-top: 15px;
   padding-bottom: 5px;
 }
 
-#mm-logo {
-  width: 100%;
-}
 
+.alert,.card-body,.card{
+  border-radius: 1.25rem !important;
+}
 /* Encrypt/Decrypt */
 
 #encryptMessageInput {
   margin-bottom: 1rem;
 }
+/* progress bar */
+.progress {
+  width: 400px;
+  height: 10px;
+}
+.progress-wrap {
+  border-radius: 10px;
+  background: purple;
+  margin: 25px auto 5px auto;
+  overflow: hidden;
+  position: relative;
+
+}
+.progress-bar {
+  background: grey;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+@keyframes animate-stripes {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: 60px 0;
+    }
+}
+.stripes {
+    background-size: 30px 30px;
+    background-image: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, .15) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, .15) 50%,
+        rgba(255, 255, 255, .15) 75%,
+        transparent 75%,
+        transparent
+    );
+}
+.stripes.animated {
+  animation: animate-stripes 0.6s linear infinite;
+}
+
+.stripes.animated.slower {
+  animation-duration: 1.25s;
+}
+
+.stripes.reverse {
+  animation-direction: reverse;
+}
+
+.counter{
+  text-align: center;
+  font-size: 14px;
+  color: #474747
+}
+/* progress bar  fine*/
+
